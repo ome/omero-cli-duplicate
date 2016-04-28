@@ -79,8 +79,7 @@ class DuplicateControl(GraphControl):
                 self.ctx.out("  %s:%s" % (k, objIds[k]))
 
 try:
-    if "OMERO_DEV_PLUGINS" in os.environ:
-        register("duplicate", DuplicateControl, HELP)
+    register("duplicate", DuplicateControl, HELP)
 except NameError:
     if __name__ == "__main__":
         cli = CLI()
