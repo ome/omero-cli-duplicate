@@ -1,0 +1,8 @@
+=======
+Changes
+=======
+
+
+0.1 - April 28, 2016
+====================
+* Initial release. Based on https://github.com/openmicroscopy/openmicroscopy/pull/4574
