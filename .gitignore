@@ -1,0 +1,4 @@
+build
+dist
+omero-cli-duplicate-*
+src/omero_cli_duplicate.egg-info
