@@ -61,7 +61,7 @@ class TestDuplicate(CLITest):
 
     @pytest.mark.parametrize("model", model)
     @pytest.mark.parametrize("object_type", object_types)
-    def testDuplicateSingleObject(self, object_type, model, capfd):
+    def test_duplicate_single_object(self, object_type, model, capfd):
         name = self.uuid()
         oid = self.create_object(object_type, name=name)
 
@@ -81,7 +81,7 @@ class TestDuplicate(CLITest):
         assert len(objs) == 2
         assert objs[0].id.val != objs[1].id.val
 
-    def testDuplicateSingleObjectDryRun(self, capfd):
+    def test_duplicate_single_object_dry_run(self, capfd):
         name = self.uuid()
         object_type = "Dataset"
         oid = self.create_object(object_type, name=name)
@@ -102,7 +102,7 @@ class TestDuplicate(CLITest):
         assert len(objs) == 1
         assert objs[0].id.val == oid
 
-    def testDuplicateSingleObjectReport(self, capfd):
+    def test_duplicate_single_object_report(self, capfd):
         name = self.uuid()
         object_type = "Dataset"
         oid = self.create_object(object_type, name=name)
@@ -125,7 +125,7 @@ class TestDuplicate(CLITest):
         assert '%s:%s' % (object_type, objs[0].id.val) in out
         assert '%s:%s' % (object_type, objs[1].id.val) in out
 
-    def testDuplicateSingleObjectDryRunReport(self, capfd):
+    def test_duplicate_single_object_dry_run_report(self, capfd):
         name = self.uuid()
         object_type = "Dataset"
         oid = self.create_object(object_type, name=name)
@@ -149,7 +149,7 @@ class TestDuplicate(CLITest):
         # Check object has been found in two different places of the output
         assert out.find(obj_arg) != out.rfind(obj_arg)
 
-    def testBasicHierarchyDuplication(self, capfd):
+    def test_basic_hierarchy_duplication(self, capfd):
         namep = self.uuid()
         named = self.uuid()
         namei = self.uuid()
@@ -218,7 +218,7 @@ class TestDuplicate(CLITest):
         assert len(dat_linked) == 1
         assert dat_linked[0].id.val == did
 
-    def testSkipheadDuplication(self, capfd):
+    def test_skiphead_duplication(self, capfd):
         namep = self.uuid()
         named = self.uuid()
 

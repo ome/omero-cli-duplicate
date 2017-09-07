@@ -25,7 +25,6 @@
 """
 
 import sys
-import os
 
 from omero.cli import CLI, GraphControl
 
@@ -74,9 +73,10 @@ class DuplicateControl(GraphControl):
     def print_duplicate_response(self, rsp):
         if rsp.duplicates:
             self.ctx.out("Duplicates")
-            objIds = self._get_object_ids(rsp.duplicates)
-            for k in objIds:
-                self.ctx.out("  %s:%s" % (k, objIds[k]))
+            obj_ids = self._get_object_ids(rsp.duplicates)
+            for k in obj_ids:
+                self.ctx.out("  %s:%s" % (k, obj_ids[k]))
+
 
 try:
     register("duplicate", DuplicateControl, HELP)
