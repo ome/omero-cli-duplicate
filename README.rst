@@ -19,7 +19,7 @@ Requirements
 Installing from PyPI
 ====================
 
-This section assumes that an OMERO.web is already installed.
+This section assumes that an OMERO.py is already installed.
 
 Install the app using `pip <https://pip.pypa.io/en/stable/>`_:
 
