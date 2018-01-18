@@ -1,18 +1,15 @@
 language: python
-# This (sudo: false) is needed to "run on container-based infrastructure" on
-# which cache: is available
-# http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+
+virtualenv:
+  system_site_packages: true
+
 sudo: required
 
+services:
+  - docker
+
 before_install:
-  - pip install restructuredtext_lint
-  - pip install flake8 pycodestyle pep8-naming
-  - flake8 .
-  - rst-lint README.rst
-  - export PATH=/usr/bin/:$PATH
+  - git clone --recurse-submodules git://github.com/openmicroscopy/omero-test-infra .omero
 
 script:
-    - sudo python setup.py sdist install --record files.txt
-    - cat files.txt | xargs sudo rm -rf
-    - sudo python setup.py bdist_egg
-    - easy_install dist/*.egg
+  - .omero/cli-docker

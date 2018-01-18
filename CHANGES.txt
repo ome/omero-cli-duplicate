@@ -2,6 +2,9 @@
 Changes
 =======
 
+0.2 - Jan 19, 2018
+==================
+* Update to match https://github.com/ome/omero-cli-render/pull/1
 
 0.1 - April 28, 2016
 ====================
