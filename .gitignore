@@ -1,4 +1,9 @@
 build
 dist
 omero-cli-duplicate-*
-src/omero_cli_duplicate.egg-info
+*.egg*
+.cache
+*.DS_Store
+.*un~
+*.pyc
+.omero
