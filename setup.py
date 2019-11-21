@@ -91,7 +91,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
-version = '0.2.0'
+version = '0.3.dev1'
 url = "https://github.com/ome/omero-cli-duplicate/"
 
 setup(
@@ -111,6 +111,7 @@ setup(
           'Natural Language :: English',
           'Operating System :: OS Independent',
           'Programming Language :: Python :: 2.7',
+          'Programming Language :: Python :: 3',
           'Topic :: Software Development :: Libraries :: Python Modules',
       ],  # Get strings from
           # http://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -120,7 +121,14 @@ setup(
     url='%s' % url,
     zip_safe=False,
     download_url='%s/v%s.tar.gz' % (url, version),
+    install_requires=[
+        'omero-py>=5.6.dev4',
+        'future'
+    ],
     keywords=['OMERO.CLI', 'plugin'],
     cmdclass={'test': PyTest},
-    tests_require=['pytest', 'restview', 'mox'],
+    tests_require=[
+        'pytest',
+        'restview',
+        'mox3'],
 )
