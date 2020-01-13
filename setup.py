@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2017 University of Dundee.
+# Copyright (c) 2017-2020 University of Dundee.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -91,7 +91,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
-version = '0.3.dev2'
+version = '0.3.0'
 url = "https://github.com/ome/omero-cli-duplicate/"
 
 setup(
@@ -121,7 +121,7 @@ setup(
     zip_safe=False,
     download_url='%s/v%s.tar.gz' % (url, version),
     install_requires=[
-        'omero-py>=5.6.dev9',
+        'omero-py>=5.6.0',
         'future'
     ],
     python_requires='>=3',
