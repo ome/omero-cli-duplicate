@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright (C) 2016 University of Dundee & Open Microscopy Environment.
+# Copyright (C) 2016-2020 University of Dundee & Open Microscopy Environment.
 # All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,7 @@ import sys
 
 from omero.cli import CLI, GraphControl
 
-HELP = """Duplicate OMERO data.
+HELP = ("""Duplicate OMERO data.
 
 Duplicate entire graphs of data based on the ID of the top-node.
 
@@ -51,7 +51,14 @@ Examples:
     # that would have been duplicated
     omero duplicate Dataset:53 --dry-run --report
 
+    # Duplicate a project with its datasets but not their images
+    omero duplicate Project:15 --ignore-classes=DatasetImageLink
+    # Duplicate a project with the original images linked into its datasets
+    omero duplicate Project:15 --reference-classes=Image
+    # Reuse annotations except for duplicating comments and ratings
 """
+        "    omero duplicate Project:15 --reference-classes=Annotation "
+        "--duplicate-classes=CommentAnnotation,LongAnnotation\n\n")
 
 
 class DuplicateControl(GraphControl):
@@ -60,6 +67,38 @@ class DuplicateControl(GraphControl):
         import omero
         import omero.all
         return omero.cmd.Duplicate
+
+    def _pre_objects(self, parser):
+        parser.add_argument(
+            "--duplicate-classes",
+            help=("Modifies the given option by specifying "
+                  "classes to duplicate"))
+        parser.add_argument(
+            "--reference-classes",
+            help=("Modifies the given option by specifying "
+                  "classes to reference"))
+        parser.add_argument(
+            "--ignore-classes",
+            help=("Modifies the given option by specifying "
+                  "classes to ignore"))
+
+    def _process_request(self, req, args, client):
+        import omero.cmd
+        if isinstance(req, omero.cmd.DoAll):
+            requests = req.requests
+        else:
+            requests = [req]
+        for request in requests:
+            if isinstance(request, omero.cmd.SkipHead):
+                request = request.request
+            if args.duplicate_classes:
+                request.typesToDuplicate = args.duplicate_classes.split(",")
+            if args.reference_classes:
+                request.typesToReference = args.reference_classes.split(",")
+            if args.ignore_classes:
+                request.typesToIgnore = args.ignore_classes.split(",")
+
+        super(DuplicateControl, self)._process_request(req, args, client)
 
     def print_detailed_report(self, req, rsp, status):
         import omero
