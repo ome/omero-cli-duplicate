@@ -53,10 +53,11 @@ Examples:
 
     # Duplicate a project with its datasets but not their images
     omero duplicate Project:15 --ignore-classes=DatasetImageLink
-    # Duplicate a project with the original images linked into its datasets
+    # Duplicate a project with the original images linked from its datasets
     omero duplicate Project:15 --reference-classes=Image
-    # Reuse annotations except for duplicating comments and ratings
 """
+        "    # Duplicate a project, linking to the original annotations "
+        "except for duplicating the comments and ratings\n"
         "    omero duplicate Project:15 --reference-classes=Annotation "
         "--duplicate-classes=CommentAnnotation,LongAnnotation\n\n")
 
@@ -71,16 +72,16 @@ class DuplicateControl(GraphControl):
     def _pre_objects(self, parser):
         parser.add_argument(
             "--duplicate-classes",
-            help=("Modifies the given option by specifying "
-                  "classes to duplicate"))
+            help=("Modifies the given option by specifying kinds of object to "
+                  "duplicate"))
         parser.add_argument(
             "--reference-classes",
-            help=("Modifies the given option by specifying "
-                  "classes to reference"))
+            help=("Modifies the given option by specifying kinds of object to "
+                  "link to instead of duplicate"))
         parser.add_argument(
             "--ignore-classes",
-            help=("Modifies the given option by specifying "
-                  "classes to ignore"))
+            help=("Modifies the given option by specifying kinds of object to "
+                  "ignore, neither linking to nor duplicating"))
 
     def _process_request(self, req, args, client):
         import omero.cmd
