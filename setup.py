@@ -102,18 +102,18 @@ setup(
     description="Plugin for use in the OMERO CLI.",
     long_description=read('README.rst'),
     classifiers=[
-          'Development Status :: 5 - Production/Stable',
-          'Environment :: Plugins',
-          'Intended Audience :: Developers',
-          'Intended Audience :: End Users/Desktop',
-          'License :: OSI Approved :: GNU General Public License v2 '
-          'or later (GPLv2+)',
-          'Natural Language :: English',
-          'Operating System :: OS Independent',
-          'Programming Language :: Python :: 3',
-          'Topic :: Software Development :: Libraries :: Python Modules',
-      ],  # Get strings from
-          # http://pypi.python.org/pypi?%3Aaction=list_classifiers
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Plugins',
+        'Intended Audience :: Developers',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: GNU General Public License v2 '
+        'or later (GPLv2+)',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ],  # Get strings from
+        # http://pypi.python.org/pypi?%3Aaction=list_classifiers
     author='The Open Microscopy Team',
     author_email='ome-devel@lists.openmicroscopy.org.uk',
     license='GPL-2.0+',
