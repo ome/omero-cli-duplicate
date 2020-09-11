@@ -56,12 +56,12 @@ Examples:
         "    omero duplicate Project:15 --reference-classes=Annotation "
         "--duplicate-classes=CommentAnnotation,LongAnnotation\n"
         """
-Group permissions can prevent a duplicated link from referencing another user's Image or Annotation.
-However, note that ignoring a linked-to class does not suffice, one must
-ignore the link itself. For instance, ignore ImageAnnotationLink or
-IAnnotationLink rather than the target Annotation. This is not an issue
-for classes such as Roi which can be ignored directly because they have
-no separate link class.
+Group permissions can prevent a duplicated link from referencing another
+user's Image or Annotation. However, note that ignoring a linked-to
+class does not suffice, one must ignore the link itself. For instance,
+ignore ImageAnnotationLink or IAnnotationLink rather than the target
+Annotation. This is not an issue for classes such as Roi which can be
+ignored directly because they have no separate link class.
 """)
 
 
