@@ -32,11 +32,6 @@ HELP = ("""Duplicate OMERO data.
 
 Duplicate entire graphs of data based on the ID of the top-node.
 
-Note that no object that corresponds to a file on disk will be duplicated.
-In some circumstances a duplicate object may reference an original object that
-does have associated binary data but a duplicated image should not be expected
-to include any pixel data.
-
 Examples:
 
     # Duplicate a dataset
