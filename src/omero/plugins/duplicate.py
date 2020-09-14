@@ -74,15 +74,18 @@ class DuplicateControl(GraphControl):
         parser.add_argument(
             "--duplicate",
             help=("Modifies the given option by specifying kinds of object to "
-                  "duplicate"))
+                  "duplicate"),
+            metavar="CLASS")
         parser.add_argument(
             "--reference",
             help=("Modifies the given option by specifying kinds of object to "
-                  "link to instead of duplicate"))
+                  "link to instead of duplicate"),
+            metavar="CLASS")
         parser.add_argument(
             "--ignore",
             help=("Modifies the given option by specifying kinds of object to "
-                  "ignore, neither linking to nor duplicating"))
+                  "ignore, neither linking to nor duplicating"),
+            metavar="CLASS")
 
     def _process_request(self, req, args, client):
         import omero.cmd
