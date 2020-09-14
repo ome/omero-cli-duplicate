@@ -47,14 +47,14 @@ Examples:
     omero duplicate Dataset:53 --dry-run --report
 
     # Duplicate a project with its datasets but not their images
-    omero duplicate Project:15 --ignore-classes=DatasetImageLink
+    omero duplicate Project:15 --ignore=DatasetImageLink
     # Duplicate a project with the original images linked from its datasets
-    omero duplicate Project:15 --reference-classes=Image
+    omero duplicate Project:15 --reference=Image
 """
         "    # Duplicate a project, linking to the original annotations "
         "except for duplicating the comments and ratings\n"
-        "    omero duplicate Project:15 --reference-classes=Annotation "
-        "--duplicate-classes=CommentAnnotation,LongAnnotation\n"
+        "    omero duplicate Project:15 --reference=Annotation "
+        "--duplicate=CommentAnnotation,LongAnnotation\n"
         """
 Group permissions can prevent a duplicated link from referencing another
 user's Image or Annotation. However, note that ignoring a linked-to
@@ -74,15 +74,15 @@ class DuplicateControl(GraphControl):
 
     def _pre_objects(self, parser):
         parser.add_argument(
-            "--duplicate-classes",
+            "--duplicate",
             help=("Modifies the given option by specifying kinds of object to "
                   "duplicate"))
         parser.add_argument(
-            "--reference-classes",
+            "--reference",
             help=("Modifies the given option by specifying kinds of object to "
                   "link to instead of duplicate"))
         parser.add_argument(
-            "--ignore-classes",
+            "--ignore",
             help=("Modifies the given option by specifying kinds of object to "
                   "ignore, neither linking to nor duplicating"))
 
@@ -95,12 +95,12 @@ class DuplicateControl(GraphControl):
         for request in requests:
             if isinstance(request, omero.cmd.SkipHead):
                 request = request.request
-            if args.duplicate_classes:
-                request.typesToDuplicate = args.duplicate_classes.split(",")
-            if args.reference_classes:
-                request.typesToReference = args.reference_classes.split(",")
-            if args.ignore_classes:
-                request.typesToIgnore = args.ignore_classes.split(",")
+            if args.duplicate:
+                request.typesToDuplicate = args.duplicate.split(",")
+            if args.reference:
+                request.typesToReference = args.reference.split(",")
+            if args.ignore:
+                request.typesToIgnore = args.ignore.split(",")
 
         super(DuplicateControl, self)._process_request(req, args, client)
 
