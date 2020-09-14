@@ -28,9 +28,7 @@ import sys
 
 from omero.cli import CLI, GraphControl
 
-HELP = ("""Duplicate OMERO data.
-
-Duplicate entire graphs of data based on the ID of the top-node.
+HELP = ("""Duplicate graphs of OMERO data based on the ID of the top-node.
 
 Examples:
 
