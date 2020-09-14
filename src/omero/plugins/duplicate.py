@@ -73,17 +73,16 @@ class DuplicateControl(GraphControl):
     def _pre_objects(self, parser):
         parser.add_argument(
             "--duplicate",
-            help=("Modifies the given option by specifying kinds of object to "
-                  "duplicate"),
+            help="Specify kinds of object to duplicate",
             metavar="CLASS")
         parser.add_argument(
             "--reference",
-            help=("Modifies the given option by specifying kinds of object to "
+            help=("Specify kinds of object to "
                   "link to instead of duplicate"),
             metavar="CLASS")
         parser.add_argument(
             "--ignore",
-            help=("Modifies the given option by specifying kinds of object to "
+            help=("Specify kinds of object to "
                   "ignore, neither linking to nor duplicating"),
             metavar="CLASS")
 
