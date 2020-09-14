@@ -82,17 +82,20 @@ class DuplicateControl(GraphControl):
         parser.add_argument(
             "--duplicate",
             help="Specify kinds of object to duplicate",
-            metavar="CLASS")
+            metavar="CLASS",
+            nargs="+", type=lambda s: s.split(","), action="append")
         parser.add_argument(
             "--reference",
             help=("Specify kinds of object to "
                   "link to instead of duplicate"),
-            metavar="CLASS")
+            metavar="CLASS",
+            nargs="+", type=lambda s: s.split(","), action="append")
         parser.add_argument(
             "--ignore",
             help=("Specify kinds of object to "
                   "ignore, neither linking to nor duplicating"),
-            metavar="CLASS")
+            metavar="CLASS",
+            nargs="+", type=lambda s: s.split(","), action="append")
 
     def _process_request(self, req, args, client):
         import omero.cmd
@@ -101,14 +104,15 @@ class DuplicateControl(GraphControl):
         else:
             requests = [req]
         for request in requests:
+            from itertools import chain
             if isinstance(request, omero.cmd.SkipHead):
                 request = request.request
             if args.duplicate:
-                request.typesToDuplicate = args.duplicate.split(",")
+                request.typesToDuplicate = list(chain(*chain(*args.duplicate)))
             if args.reference:
-                request.typesToReference = args.reference.split(",")
+                request.typesToReference = list(chain(*chain(*args.reference)))
             if args.ignore:
-                request.typesToIgnore = args.ignore.split(",")
+                request.typesToIgnore = list(chain(*chain(*args.ignore)))
 
         super(DuplicateControl, self)._process_request(req, args, client)
 
