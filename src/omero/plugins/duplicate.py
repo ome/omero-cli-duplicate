@@ -33,9 +33,9 @@ HELP = ("""Duplicate graphs of OMERO data based on the ID of the top-node.
 By default, a whole subtree of OMERO model objects is duplicated. One
 may opt to have duplicate objects reference original parts of the
 subtree instead of also duplicating those, see the "--reference" option
-below. More strongly, one may "--ignore" given kinds of model objects such that
-they are not included among the duplicate in any way; if using this
-option then read on to the warning below about ignoring a linked-to
+below. More strongly, one may "--ignore" given kinds of model objects
+such that they are not included among the duplicate in any way; if using
+this option then read on to the warning below about ignoring a linked-to
 class.
 
 Examples:
