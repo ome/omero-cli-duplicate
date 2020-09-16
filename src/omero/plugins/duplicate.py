@@ -53,14 +53,14 @@ Examples:
     omero duplicate Dataset:53 --dry-run --report
 
     # Duplicate a project with its datasets but not their images
-    omero duplicate Project:15 --ignore=DatasetImageLink
+    omero duplicate Project:15 --ignore DatasetImageLink
     # Duplicate a project with the original images linked from its datasets
-    omero duplicate Project:15 --reference=Image
+    omero duplicate Project:15 --reference Image
 """
         "    # Duplicate a project, linking to the original annotations "
         "except for duplicating the comments and ratings\n"
-        "    omero duplicate Project:15 --reference=Annotation "
-        "--duplicate=CommentAnnotation,LongAnnotation\n"
+        "    omero duplicate Project:15 --reference Annotation "
+        "--duplicate CommentAnnotation,LongAnnotation\n"
         """
 Group permissions can prevent a duplicated link from referencing another
 user's Image or Annotation, causing a duplication error. However, using
