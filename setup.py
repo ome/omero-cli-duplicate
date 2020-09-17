@@ -121,7 +121,7 @@ setup(
     zip_safe=False,
     download_url='%s/v%s.tar.gz' % (url, version),
     install_requires=[
-        'omero-py>=5.6.0',
+        'omero-py>=5.8',
         'future'
     ],
     python_requires='>=3',
