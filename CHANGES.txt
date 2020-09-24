@@ -2,7 +2,7 @@
 Changes
 =======
 
-0.4 - Sep 29, 2020
+0.4 - Sep 24, 2020
 ==================
 * Further arguments parsed for passing to OMERO.blitz
 
