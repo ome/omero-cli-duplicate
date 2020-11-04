@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/ome/omero-cli-duplicate.svg?branch=master
-    :target: https://travis-ci.org/ome/omero-cli-duplicate
+.. image:: https://github.com/ome/omero-cli-duplicate/workflows/OMERO/badge.svg
+    :target: https://github.com/ome/omero-cli-duplicate/actions
 
 .. image:: https://badge.fury.io/py/omero-cli-duplicate.svg
     :target: https://badge.fury.io/py/omero-cli-duplicate
