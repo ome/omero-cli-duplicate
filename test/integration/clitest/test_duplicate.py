@@ -29,7 +29,6 @@ model = ["", "I"]
 
 
 class TestDuplicate(CLITest):
-
     def setup_method(self, method):
         super(TestDuplicate, self).setup_method(method)
         self.cli.register("duplicate", DuplicateControl, "TEST")
@@ -44,9 +43,11 @@ class TestDuplicate(CLITest):
 
         params = omero.sys.ParametersI()
         params.addId(iid)
-        query = ("select d from Dataset as d where exists"
-                 "(select l from DatasetImageLink as l where "
-                 "l.child.id=:id and l.parent=d.id)")
+        query = (
+            "select d from Dataset as d where exists"
+            "(select l from DatasetImageLink as l where "
+            "l.child.id=:id and l.parent=d.id)"
+        )
         return self.query.findAllByQuery(query, params)
 
     def get_project(self, did):
@@ -54,9 +55,11 @@ class TestDuplicate(CLITest):
 
         params = omero.sys.ParametersI()
         params.addId(did)
-        query = ("select p from Project as p where exists"
-                 "(select l from ProjectDatasetLink as l where "
-                 "l.child.id=:id and l.parent=p.id)")
+        query = (
+            "select p from Project as p where exists"
+            "(select l from ProjectDatasetLink as l where "
+            "l.child.id=:id and l.parent=p.id)"
+        )
         return self.query.findAllByQuery(query, params)
 
     @pytest.mark.parametrize("model", model)
@@ -66,7 +69,7 @@ class TestDuplicate(CLITest):
         oid = self.create_object(object_type, name=name)
 
         # Duplicate the object
-        obj_arg = '%s%s:%s' % (object_type, model, oid)
+        obj_arg = "%s%s:%s" % (object_type, model, oid)
         self.args += [obj_arg]
         out = self.duplicate(capfd)
 
@@ -87,7 +90,7 @@ class TestDuplicate(CLITest):
         oid = self.create_object(object_type, name=name)
 
         # Duplicate the object
-        obj_arg = '%s:%s' % (object_type, oid)
+        obj_arg = "%s:%s" % (object_type, oid)
         self.args += [obj_arg, "--dry-run"]
         out = self.duplicate(capfd)
 
@@ -108,7 +111,7 @@ class TestDuplicate(CLITest):
         oid = self.create_object(object_type, name=name)
 
         # Duplicate the object
-        obj_arg = '%s:%s' % (object_type, oid)
+        obj_arg = "%s:%s" % (object_type, oid)
         self.args += [obj_arg, "--report"]
         out = self.duplicate(capfd)
         lines_out = out.splitlines()
@@ -122,8 +125,8 @@ class TestDuplicate(CLITest):
         assert len(objs) == 2
         assert objs[0].id.val != objs[1].id.val
         assert len(lines_out) == 6
-        assert '%s:%s' % (object_type, objs[0].id.val) in out
-        assert '%s:%s' % (object_type, objs[1].id.val) in out
+        assert "%s:%s" % (object_type, objs[0].id.val) in out
+        assert "%s:%s" % (object_type, objs[1].id.val) in out
 
     def test_duplicate_single_object_dry_run_report(self, capfd):
         name = self.uuid()
@@ -131,7 +134,7 @@ class TestDuplicate(CLITest):
         oid = self.create_object(object_type, name=name)
 
         # Duplicate the object
-        obj_arg = '%s:%s' % (object_type, oid)
+        obj_arg = "%s:%s" % (object_type, oid)
         self.args += [obj_arg, "--dry-run", "--report"]
         out = self.duplicate(capfd)
         lines_out = out.splitlines()
@@ -145,7 +148,7 @@ class TestDuplicate(CLITest):
         assert len(objs) == 1
         assert objs[0].id.val == oid
         assert len(lines_out) == 7
-        assert '%s:%s' % (object_type, objs[0].id.val) in out
+        assert "%s:%s" % (object_type, objs[0].id.val) in out
         # Check object has been found in two different places of the output
         assert out.find(obj_arg) != out.rfind(obj_arg)
 
@@ -160,8 +163,8 @@ class TestDuplicate(CLITest):
         self.link(proj, dset)
         self.link(dset, img)
 
-        self.args += ['Project:%s' % proj.id.val]
-        self.args += ['--report']
+        self.args += ["Project:%s" % proj.id.val]
+        self.args += ["--report"]
         out = self.duplicate(capfd)
 
         pp = omero.sys.ParametersI()
@@ -176,7 +179,7 @@ class TestDuplicate(CLITest):
         pid = max(objsp[0].id.val, objsp[1].id.val)
 
         # Check the duplicated Project is in the --report output
-        assert 'Project:%s' % pid in out
+        assert "Project:%s" % pid in out
 
         pd = omero.sys.ParametersI()
         pd.addString("name", named)
@@ -192,7 +195,7 @@ class TestDuplicate(CLITest):
         proj_linked = self.get_project(did)
 
         # Check the duplicated Dataset is in the --report output
-        assert 'Dataset:%s' % did in out
+        assert "Dataset:%s" % did in out
 
         # Check the duplicated Dataset is linked to just the duplicated Project
         assert len(proj_linked) == 1
@@ -212,7 +215,7 @@ class TestDuplicate(CLITest):
         dat_linked = self.get_dataset(iid)
 
         # Check the duplicated Image is in the --report output
-        assert 'Image:%s' % iid in out
+        assert "Image:%s" % iid in out
 
         # Check the duplicated image is linked to just the duplicated Dataset
         assert len(dat_linked) == 1
@@ -227,8 +230,8 @@ class TestDuplicate(CLITest):
 
         self.link(proj, dset)
 
-        self.args += ['Project/Dataset:%s' % proj.id.val]
-        self.args += ['--report']
+        self.args += ["Project/Dataset:%s" % proj.id.val]
+        self.args += ["--report"]
         out = self.duplicate(capfd)
 
         pd = omero.sys.ParametersI()
@@ -243,7 +246,7 @@ class TestDuplicate(CLITest):
         did = max(objsd[0].id.val, objsd[1].id.val)
 
         # Check the duplicated Dataset is in the --report output
-        assert 'Dataset:%s' % did in out
+        assert "Dataset:%s" % did in out
 
         # Find the Projects linked to the duplicated dataset
         proj_linked = self.get_project(did)

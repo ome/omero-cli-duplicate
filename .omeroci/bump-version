@@ -8,12 +8,14 @@ from os.path import pardir
 from re import compile
 
 setup_file = join(dirname(__file__), pardir, "setup.py")
-setup_re = compile("^(version\s=\s')\S+(')$")
+setup_re = compile(r"^(version\s=\s')\S+(')$")
+
 
 def replace_version(file, re, version):
     for line in input([file], inplace=1):
         replacement = r"\g<1>%s\g<2>" % version
-        print re.sub(replacement, line),
+        print(re.sub(replacement, line), end="")
+
 
 if __name__ == "__main__":
     parser = ArgumentParser()
