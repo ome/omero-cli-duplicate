@@ -117,6 +117,38 @@ class DuplicateControl(GraphControl):
 
         super(DuplicateControl, self)._process_request(req, args, client)
 
+    def print_report(self, req, rsp, status, detailed):
+        """
+        Overrides omero.cli.GraphControl.print_report to print
+        a reusable representation when --report is not passed.
+        """
+        import omero
+
+        if not detailed:
+            if isinstance(rsp, omero.cmd.DoAllRsp):
+                for response in rsp.responses:
+                    if isinstance(response, omero.cmd.DuplicateResponse):
+                        self._print_reusable_output(req, response)
+            elif isinstance(rsp, omero.cmd.DuplicateResponse):
+                self._print_reusable_output(req, rsp)
+
+            err = self.get_error(rsp)
+            if err:
+                self.ctx.err(err)
+        else:
+            super(DuplicateControl, self).print_report(req, rsp, status, detailed)
+
+    def _print_reusable_output(self, request, response):
+        """
+        Candidate for migration to omero/cli.py Prints results in the
+        Class:ID format for passing to other commands.
+        """
+        for c in request.targetObjects.keys():
+            for k, v in response.duplicates.items():
+                if k.endswith(f".{c}"):
+                    for i in v:
+                        self.ctx.out(f"{c}:{i}")
+
     def print_detailed_report(self, req, rsp, status):
         import omero
         if isinstance(rsp, omero.cmd.DoAllRsp):
