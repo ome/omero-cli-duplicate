@@ -27,8 +27,8 @@ jobs:
       - name: Checkout omero-test-infra
         uses: actions/checkout@v2
         with:
-          repository: manics/omero-test-infra
+          repository: ome/omero-test-infra
           path: .omero
-          ref: pre-commit
+          ref: ${{ secrets.OMERO_TEST_INFRA_REF }}
       - name: Build and run OMERO tests
         run: .omero/docker $STAGE
