@@ -7,7 +7,10 @@
 omero-cli-duplicate
 ===================
 
-Plugin for use in the OMERO CLI.
+OMERO command-line plugin for duplicating Objects in OMERO, without duplicating binary data.
+
+For usage instructions, please see `OMERO guides <https://omero-guides.readthedocs.io/projects/introduction/en/latest/data-management.html?#command-line-duplicating-objects>`_.
+
 
 Requirements
 ============
