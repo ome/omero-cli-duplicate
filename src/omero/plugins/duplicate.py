@@ -28,7 +28,8 @@ import sys
 
 from omero.cli import CLI, GraphControl
 
-HELP = ("""Duplicate graphs of OMERO data based on the ID of the top-node.
+HELP = (
+    """Duplicate graphs of OMERO data based on the ID of the top-node.
 
 By default, a whole subtree of OMERO model objects is duplicated. One
 may opt to have duplicate objects reference original parts of the
@@ -57,11 +58,11 @@ Examples:
     # Duplicate a project with the original images linked from its datasets
     omero duplicate Project:15 --reference Image
 """
-        "    # Duplicate a project, linking to the original annotations "
-        "except for duplicating the comments and ratings\n"
-        "    omero duplicate Project:15 --reference Annotation "
-        "--duplicate CommentAnnotation,LongAnnotation\n"
-        """
+    "    # Duplicate a project, linking to the original annotations "
+    "except for duplicating the comments and ratings\n"
+    "    omero duplicate Project:15 --reference Annotation "
+    "--duplicate CommentAnnotation,LongAnnotation\n"
+    """
 Group permissions can prevent a duplicated link from referencing another
 user's Image or Annotation, causing a duplication error. However, using
 "--ignore" instead of "--reference" for a linked-to class does not
@@ -69,14 +70,15 @@ suffice, one must ignore the link itself. For instance, ignore
 ImageAnnotationLink or IAnnotationLink rather than the target
 Annotation. This is not an issue for classes such as Roi which can be
 ignored directly because they have no separate link class.
-""")
+"""
+)
 
 
 class DuplicateControl(GraphControl):
-
     def cmd_type(self):
         import omero
         import omero.all
+
         return omero.cmd.Duplicate
 
     def _pre_objects(self, parser):
@@ -84,28 +86,40 @@ class DuplicateControl(GraphControl):
             "--duplicate",
             help="Specify kinds of object to duplicate",
             metavar="CLASS",
-            nargs="+", type=lambda s: s.split(","), action="append")
+            nargs="+",
+            type=lambda s: s.split(","),
+            action="append",
+        )
         parser.add_argument(
             "--reference",
-            help=("Specify kinds of object to "
-                  "link to instead of duplicate"),
+            help=("Specify kinds of object to " "link to instead of duplicate"),
             metavar="CLASS",
-            nargs="+", type=lambda s: s.split(","), action="append")
+            nargs="+",
+            type=lambda s: s.split(","),
+            action="append",
+        )
         parser.add_argument(
             "--ignore",
-            help=("Specify kinds of object to "
-                  "ignore, neither linking to nor duplicating"),
+            help=(
+                "Specify kinds of object to "
+                "ignore, neither linking to nor duplicating"
+            ),
             metavar="CLASS",
-            nargs="+", type=lambda s: s.split(","), action="append")
+            nargs="+",
+            type=lambda s: s.split(","),
+            action="append",
+        )
 
     def _process_request(self, req, args, client):
         import omero.cmd
+
         if isinstance(req, omero.cmd.DoAll):
             requests = req.requests
         else:
             requests = [req]
         for request in requests:
             from itertools import chain
+
             if isinstance(request, omero.cmd.SkipHead):
                 request = request.request
             if args.duplicate:
@@ -117,8 +131,41 @@ class DuplicateControl(GraphControl):
 
         super(DuplicateControl, self)._process_request(req, args, client)
 
+    def print_report(self, req, rsp, status, detailed):
+        """
+        Overrides omero.cli.GraphControl.print_report to print
+        a reusable representation when --report is not passed.
+        """
+        import omero
+
+        if not detailed:
+            if isinstance(rsp, omero.cmd.DoAllRsp):
+                for response in rsp.responses:
+                    if isinstance(response, omero.cmd.DuplicateResponse):
+                        self._print_reusable_output(req, response)
+            elif isinstance(rsp, omero.cmd.DuplicateResponse):
+                self._print_reusable_output(req, rsp)
+
+            err = self.get_error(rsp)
+            if err:
+                self.ctx.err(err)
+        else:
+            super(DuplicateControl, self).print_report(req, rsp, status, detailed)
+
+    def _print_reusable_output(self, request, response):
+        """
+        Candidate for migration to omero/cli.py Prints results in the
+        Class:ID format for passing to other commands.
+        """
+        for c in request.targetObjects.keys():
+            for k, v in response.duplicates.items():
+                if k.endswith(f".{c}"):
+                    for i in v:
+                        self.ctx.out(f"{c}:{i}")
+
     def print_detailed_report(self, req, rsp, status):
         import omero
+
         if isinstance(rsp, omero.cmd.DoAllRsp):
             for response in rsp.responses:
                 if isinstance(response, omero.cmd.DuplicateResponse):
