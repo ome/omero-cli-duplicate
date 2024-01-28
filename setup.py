@@ -129,6 +129,5 @@ setup(
     cmdclass={'test': PyTest},
     tests_require=[
         'pytest',
-        'restview',
-        'mox3'],
+        'restview'],
 )
