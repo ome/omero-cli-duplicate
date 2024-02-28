@@ -20,7 +20,6 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
-from builtins import object
 import pytest
 
 import omero
@@ -29,7 +28,6 @@ from omero.plugins.sessions import SessionsControl
 from omero.rtypes import rstring
 
 from omero.testlib import ITest
-from mox3 import mox
 
 
 class AbstractCLITest(ITest):
@@ -39,13 +37,6 @@ class AbstractCLITest(ITest):
         super(AbstractCLITest, cls).setup_class()
         cls.cli = CLI()
         cls.cli.register("sessions", SessionsControl, "TEST")
-
-    def setup_mock(self):
-        self.mox = mox.Mox()
-
-    def teardown_mock(self):
-        self.mox.UnsetStubs()
-        self.mox.VerifyAll()
 
 
 class CLITest(AbstractCLITest):
