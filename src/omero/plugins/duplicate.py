@@ -47,7 +47,7 @@ Examples:
 
     # Print the outputs of the duplicate command, but do not execute it
     omero duplicate Dataset:53 --dry-run
-    # Report all the objects that  would have been duplicated by
+    # Report all the objects that would have been duplicated by
     # running the duplicate command, but do not execute it
     omero duplicate Dataset:53 --dry-run --report
 
