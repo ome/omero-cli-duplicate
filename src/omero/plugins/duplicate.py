@@ -45,11 +45,10 @@ Examples:
     # Do the same reporting all the new duplicate objects
     omero duplicate Dataset:50 --report
 
-    # Do a dry run of a duplicate reporting the outcome
-    # if the duplicate had been run
+    # Print the outputs of the duplicate command, but do not execute it
     omero duplicate Dataset:53 --dry-run
-    # Do a dry run of a duplicate, reporting all the objects
-    # that would have been duplicated
+    # Report all the objects that would have been duplicated by
+    # running the duplicate command, but do not execute it
     omero duplicate Dataset:53 --dry-run --report
 
     # Duplicate a project with its datasets but not their images
